@@ -6,6 +6,7 @@ use frontend\models\ShoeBrand;
 use frontend\models\ShoeCategory;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\bootstrap4\modal;
 
 $shoe_list = Shoes::find()->JoinWith('images')->all();
 
@@ -103,8 +104,12 @@ $this->title = 'Viatu Duka';
               <!-- end modal btn -->
                 <h5 class="card-title new-ticker-bg"><span class="new-ticker">New</span></h5>
               <div class="card-body">
-                <a href="<?= Url::to(['shoes/addcart', 'shoe_id'=>$shoe->shoe_id])?>" class="btn btn-primary" role="button">Add to Cart</a>
-                <a href="<?= Url::to(['site/viewitem','shoe_id'=>$shoe->shoe_id,])?>" type="button" class="btn btn-primary">More info</a>
+               <!--  <a href="<?= Url::to(['shoes/addcart', 'shoe_id'=>$shoe->shoe_id])?>" class="btn btn-primary addcart" role="button">Add to Cart</a> -->
+
+                 <button type="button" val="<?= $shoe->shoe_id ?>" class="btn btn-primary addtocart ">Add to cart</button>
+
+
+                <a href="<?= Url::to(['site/viewitem','shoe_id'=>$shoe->shoe_id,])?>" type="button" class="btn btn-danger">More info</a>
                 <h6 class="card-title"><?= $shoe['shoe_name'] ?></h6>
                 <p class="lead"><?= $shoe['description'] ?></p>
                 <p class="text-muted">Ksh <span><?= $shoe['price'] ?></span></p>
@@ -143,7 +148,7 @@ $this->title = 'Viatu Duka';
                 </div>
               </div>
               <div class="modal-footer">
-                <a href="checkout.html" type="button" class="btn btn-danger">Proceed Check Out</a>
+                <a href="checkout.html" type="button" class="btn btn-danger">Continue to Shop</a>
                 <a href="" type="button" class="btn btn-primary">Add to Cart</a>
               </div>
             </div>
@@ -317,3 +322,12 @@ $this->title = 'Viatu Duka';
   </div>
 </div>
 <!-- end new letter -->
+<?php
+Modal::begin([
+  'title'=>'<h4>Add to Cart</h4>',
+  'id'=>'addtocart',
+  'size'=>'modal-lg'
+]);
+echo "<div id='addtocartContent'></div>";
+Modal::end();
+?>

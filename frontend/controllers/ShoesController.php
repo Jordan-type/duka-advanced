@@ -108,22 +108,23 @@ class ShoesController extends Controller
     }
 
 
-    // public function actionCart()
-    // {
-    //     $session = Yii::$app->session;
+public function actionOrder()
+{
+    $model = new \frontend\models\Order();
 
-    //     $cart = array();
-    //     $cart[] = $session['addcart'];
 
-    //     $check_pid_post = Yii::$app->request->post('pid');
-    //       if(isset($check_pid_post)){
-    //           $cart[]= $check_pid_post; //shoe to cart
-    //           $session['addcart'] = $cart;
-    //       }
-     
-    //     $carts = Shoes::find()->where(['shoe_id'=>$session['addcart']])->all();
-    //     return $this->render('addcart',[''=>$carts]);
-    // }
+    if ($model->load(Yii::$app->request->post())) {
+        
+        $model->save();
+
+            return $this->redirect(['site/index']);
+      
+    }
+
+    return $this->render('order', [
+        'model' => $model,
+    ]);
+}
 
 
 

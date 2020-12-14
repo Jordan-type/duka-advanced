@@ -3,18 +3,16 @@
 namespace frontend\models;
 
 use Yii;
+use common\models\user;
 
 /**
  * This is the model class for table "order".
  *
  * @property int $order_id
- * @property int $cart_id
  * @property int $user_id
  * @property string $paymethod
  * @property string $card_no
- * @property float $total_price
  *
- * @property Cart $cart
  * @property User $user
  */
 class Order extends \yii\db\ActiveRecord
@@ -33,11 +31,9 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cart_id', 'user_id', 'paymethod', 'card_no', 'total_price'], 'required'],
-            [['cart_id', 'user_id'], 'integer'],
-            [['total_price'], 'number'],
+            [['user_id', 'paymethod', 'card_no'], 'required'],
+            [['user_id'], 'integer'],
             [['paymethod', 'card_no'], 'string', 'max' => 255],
-            [['cart_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cart::className(), 'targetAttribute' => ['cart_id' => 'cart_id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -49,31 +45,28 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             'order_id' => 'Order ID',
-            'cart_id' => 'Cart ID',
             'user_id' => 'User ID',
             'paymethod' => 'Paymethod',
             'card_no' => 'Card No',
-            'total_price' => 'Total Price',
         ];
-    }
-
-    /**
-     * Gets query for [[Cart]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCart()
-    {
-        return $this->hasOne(Cart::className(), ['cart_id' => 'cart_id']);
     }
 
     /**
      * Gets query for [[User]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|\frontend\models\query\UserQuery
      */
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return \frontend\models\query\OrderQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new \frontend\models\query\OrderQuery(get_called_class());
     }
 }

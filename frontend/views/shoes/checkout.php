@@ -13,7 +13,6 @@ $total_price = Cart::find()->JoinWith('shoe')->sum('price');
 
 ?>
 
-
  <!-- start checkout -->
     <section class="container-fluid top-margin-checkout">
     	<div class="row">
@@ -118,22 +117,23 @@ $total_price = Cart::find()->JoinWith('shoe')->sum('price');
     					<hr>
     					<div class="row">
     						<div class="col-md-12"> 
-                            <?php foreach ($cart_list as $cart){?> 						
-    					<p><a href="#"><?= $cart->shoe->shoe_name ?></a> <span class="price-cart">KSH. <?= $cart->shoe->price ?></span></p>
-    					
-    					<?php } ?>
-    					
-    				</div>
-    						
-    					</div>
-    					
-    				<hr>
-                    
-    					<p>Total <span class="price-cart" style="color:black"><b>ksh.<?= $total_price ?> </b></span></p>
-                        
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    </section>
-    <!-- end checkout -->
+                            <?php foreach ($cart_list as $cart){?>
+                                <button class="btn btn-danger price-cart" title="Click to delete product" >
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </button>
+                                <p class=""><a href="#">
+                                    <?= $cart->shoe->shoe_name ?></a>
+                                    <span class="price-cart">KSH. <?= $cart->shoe->price ?></span>
+                                </p>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <hr>
+                    <p>Total <span class="price-cart" style="color:black"><b>ksh.<?= $total_price ?></b></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end checkout -->
+

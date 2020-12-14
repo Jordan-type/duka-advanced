@@ -14,6 +14,8 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\Cart;
+use frontend\models\Shoes;
 
 /**
  * Site controller
@@ -188,6 +190,24 @@ class SiteController extends Controller
         return $this->render('viewitem');
     }
 
+
+public function actionAddtocart($shoe_id)
+{
+    $model = new Cart();
+
+    if ($model->load(Yii::$app->request->post())) {
+
+        $model->save();
+
+            return $this->redirect(['shoes/order']);
+
+    }
+
+    return $this->renderAjax('addtocart', [
+        'model' => $model,
+        'shoe_id' => $shoe_id,
+    ]);
+}
 
 
     /**

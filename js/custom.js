@@ -27,12 +27,13 @@ $(document).ready(function() {
       }); 
 
             //addcart
-      $('.addcart').click(function(e){
+      $('.addtocart').click(function(e){
           e.preventDefault();
 
-          $.get('addcart',function(data){
-          $('#addcart').modal('show')
-          .find('#addcartContent')
+          var shoe_id = $(this).attr('val');
+          $.get('addtocart?shoe_id='+shoe_id,function(data){
+          $('#addtocart').modal('show')
+          .find('#addtocartContent')
           // .load($(this).attr('value'));
           .html(data);
 
